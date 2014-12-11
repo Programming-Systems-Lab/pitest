@@ -172,8 +172,14 @@ public enum ConfigOption {
   /**
    * Path to executable with which to run tests
    */
-  JVM_PATH("jvmPath");
+  JVM_PATH("jvmPath"),
 
+  /**
+   * Should we keep going with running more tests against the same
+   * mutant, even when that mutant was killed?
+   */
+  DONT_STOP_WHEN_MUTANT_KILLED("dontStopAtMutantKilled",false);
+  
   private final String text;
   private final Object defaultValue;
 

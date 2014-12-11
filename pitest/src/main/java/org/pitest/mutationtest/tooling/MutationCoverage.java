@@ -248,8 +248,9 @@ public class MutationCoverage {
         .getConfiguration(), mutationConfig,
         new PercentAndConstantTimeoutStrategy(this.data.getTimeoutFactor(),
             this.data.getTimeoutConstant()), this.data.isVerbose(), this.data
-            .getClassPath().getLocalClassPath());
-    
+            .getClassPath().getLocalClassPath(),
+        this.data.isDontStopAtMutantKilled());
+
     MutationGrouper grouper = settings.getMutationGrouper().makeFactory(code, data.getNumberOfThreads(), data.getMutationUnitSize());
     final MutationTestBuilder builder = new MutationTestBuilder(wf,
         mutationConfig, analyser, source, grouper);
