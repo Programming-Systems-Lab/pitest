@@ -27,8 +27,13 @@ import static org.pitest.mutationtest.report.xml.Tag.sourceFile;
 import java.io.IOException;
 import java.io.Writer;
 
+import org.pitest.classinfo.ClassInfo;
+import org.pitest.classpath.CodeSource;
+import org.pitest.coverage.CoverageDatabase;
+import org.pitest.coverage.TestInfo;
 import org.pitest.functional.Option;
 import org.pitest.mutationtest.ClassMutationResults;
+import org.pitest.mutationtest.CoverageListener;
 import org.pitest.mutationtest.MutationResult;
 import org.pitest.mutationtest.MutationResultListener;
 import org.pitest.mutationtest.engine.MutationDetails;
@@ -36,11 +41,13 @@ import org.pitest.util.ResultOutputStrategy;
 import org.pitest.util.StringUtil;
 import org.pitest.util.Unchecked;
 
+import sun.management.counter.Units;
+
 enum Tag {
   mutation, sourceFile, mutatedClass, mutatedMethod, methodDescription, lineNumber, mutator, index, killingTest;
 }
 
-public class XMLReportListener implements MutationResultListener {
+public class XMLReportListener implements MutationResultListener, CoverageListener {
 
   private final Writer out;
 
@@ -121,7 +128,7 @@ public class XMLReportListener implements MutationResultListener {
 
   public void runStart() {
     write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    write("<mutations>\n");
+    write("<data><mutations>\n");
   }
 
   public void handleMutationResult(final ClassMutationResults metaData) {
@@ -131,10 +138,28 @@ public class XMLReportListener implements MutationResultListener {
   public void runEnd() {
     try {
       write("</mutations>\n");
+      write("<tests>\n");
+      for(ClassInfo i : code.getTests())
+      {
+        for(TestInfo t : coverage.getTestsForClass(i.getName()))
+        {
+          write("<test>"+t.getName()+"</test>\n");
+        }
+      }
+      write("</tests></data>\n");
       this.out.close();
     } catch (final IOException e) {
       throw Unchecked.translateCheckedException(e);
     }
+  }
+
+  private CodeSource code;
+  private CoverageDatabase coverage;
+  
+  @Override
+  public void handleCoverageData(CodeSource code, CoverageDatabase coverage) {
+    this.code= code;
+    this.coverage = coverage;
   }
 
 }
