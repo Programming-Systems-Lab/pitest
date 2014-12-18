@@ -112,7 +112,7 @@ public abstract class ReportTestBase {
 
       final CoverageGenerator coverageDatabase = new DefaultCoverageGenerator(
           null, coverageOptions, launchOptions, code,
-          new NullCoverageExporter(), timings, false);
+          new NullCoverageExporter(), timings, false, false);
 
       final HistoryStore history = new NullHistoryStore();
 

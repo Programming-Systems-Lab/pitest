@@ -122,6 +122,8 @@ public class ReportOptions {
 
   private boolean                        dontStopAtMutantKilled         = false;
 
+  private boolean                        ignoreFailingTests             = false;
+  
   public boolean isVerbose() {
     return this.verbose;
   }
@@ -577,5 +579,10 @@ public class ReportOptions {
   public void setDontStopAtMutantKilled(boolean dontStopAtMutantKilled) {
     this.dontStopAtMutantKilled = dontStopAtMutantKilled;
   }
-
+  public void setIgnoreFailingTests(boolean ignoreFailingTests) {
+    this.ignoreFailingTests = ignoreFailingTests;
+  }
+  public boolean isIgnoreFailingTests() {
+    return ignoreFailingTests;
+  }
 }

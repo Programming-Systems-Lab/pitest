@@ -118,7 +118,8 @@ public class OptionsParser {
   private final ArgumentAcceptingOptionSpec<Boolean> includeLaunchClasspathSpec;
 
   private final ArgumentAcceptingOptionSpec<Boolean> dontStopAtMutantKilled;
-  
+  private final ArgumentAcceptingOptionSpec<Boolean> ignoreFailingTests;
+
   public OptionsParser(Predicate<String> dependencyFilter) {
 
     this.dependencyFilter = dependencyFilter;
@@ -304,6 +305,9 @@ public class OptionsParser {
     this.dontStopAtMutantKilled = parserAccepts(ConfigOption.DONT_STOP_WHEN_MUTANT_KILLED)
             .withOptionalArg().ofType(Boolean.class).defaultsTo(false)
             .describedAs("Should we stop running tests against a mutant after finding a test that kills it?");
+    
+    this.ignoreFailingTests = parserAccepts(ConfigOption.IGNORE_FAILING_TESTS).withOptionalArg().ofType(Boolean.class).defaultsTo(false).
+    		describedAs("Ignore tests that don't pass before mutation (rather than fail)");
   }
 
   private OptionSpecBuilder parserAccepts(final ConfigOption option) {
@@ -393,6 +397,10 @@ public class OptionsParser {
 
     data.setDontStopAtMutantKilled(userArgs.has(this.dontStopAtMutantKilled)
     	&& this.dontStopAtMutantKilled.value(userArgs));
+    
+    data.setIgnoreFailingTests(userArgs.has(this.ignoreFailingTests)
+        	&& this.ignoreFailingTests.value(userArgs));
+
     
     if (userArgs.has("?")) {
       return new ParseResult(data, "See above for supported parameters.");

@@ -58,10 +58,11 @@ public class DefaultCoverageGenerator implements CoverageGenerator {
   private final CoverageExporter exporter;
   private final boolean          showProgress;
 
+  private final boolean          ignoreFailedTests;
   public DefaultCoverageGenerator(final File workingDir,
       final CoverageOptions coverageOptions, final LaunchOptions launchOptions,
       final CodeSource code, final CoverageExporter exporter,
-      final Timings timings, final boolean showProgress) {
+      final Timings timings, final boolean showProgress, final boolean ignoreFailedTests) {
     this.coverageOptions = coverageOptions;
     this.code = code;
     this.launchOptions = launchOptions;
@@ -69,6 +70,7 @@ public class DefaultCoverageGenerator implements CoverageGenerator {
     this.workingDir = workingDir;
     this.exporter = exporter;
     this.showProgress = showProgress;
+    this.ignoreFailedTests = ignoreFailedTests;
   }
 
   public CoverageData calculateCoverage() {
@@ -89,7 +91,8 @@ public class DefaultCoverageGenerator implements CoverageGenerator {
 
       LOG.info("Calculated coverage in " + time + " seconds.");
 
-      verifyBuildSuitableForMutationTesting(coverage);
+      if(!ignoreFailedTests)
+        verifyBuildSuitableForMutationTesting(coverage);
 
       this.exporter.recordCoverage(coverage.createCoverage());
 

@@ -2,6 +2,7 @@ package org.pitest.coverage;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import org.pitest.testapi.Description;
 
@@ -32,7 +33,10 @@ public class CoverageResult implements Serializable {
   }
 
   public Collection<BlockLocation> getCoverage() {
-    return this.visitedBlocks;
+    if (!greenSuite)
+      return new LinkedList<BlockLocation>();
+    else
+      return this.visitedBlocks;
   }
 
   public boolean isGreenTest() {
@@ -40,7 +44,10 @@ public class CoverageResult implements Serializable {
   }
   
   public int getNumberOfCoveredBlocks() {
-    return this.visitedBlocks.size();
+    if (!greenSuite)
+      return 0;
+    else
+      return this.visitedBlocks.size();
   }
 
   @Override

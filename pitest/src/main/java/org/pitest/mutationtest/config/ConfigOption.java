@@ -178,7 +178,10 @@ public enum ConfigOption {
    * Should we keep going with running more tests against the same
    * mutant, even when that mutant was killed?
    */
-  DONT_STOP_WHEN_MUTANT_KILLED("dontStopAtMutantKilled",false);
+  DONT_STOP_WHEN_MUTANT_KILLED("dontStopAtMutantKilled",false),
+  
+  IGNORE_FAILING_TESTS("ignoreFailingTests",false);
+
   
   private final String text;
   private final Object defaultValue;

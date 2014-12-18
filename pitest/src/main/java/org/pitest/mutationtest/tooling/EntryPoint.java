@@ -86,7 +86,7 @@ public class EntryPoint {
     final Timings timings = new Timings();
     final CoverageGenerator coverageDatabase = new DefaultCoverageGenerator(
         baseDir, coverageOptions, launchOptions, code,
-        settings.createCoverageExporter(), timings, !data.isVerbose());
+        settings.createCoverageExporter(), timings, !data.isVerbose(),data.isIgnoreFailingTests());
 
     final HistoryStore history = new XStreamHistoryStore(historyWriter, reader);
 
