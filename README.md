@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/hcoles/pitest.png?label=ready)](https://waffle.io/hcoles/pitest)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 [![Build Status](https://travis-ci.org/hcoles/pitest.png?branch=master)](https://travis-ci.org/hcoles/pitest)
 
 pitest
@@ -10,9 +10,11 @@ Read all about it at http://pitest.org
 
 ## Releases
 
-### 1.1.3-SNAPSHOT
+### 1.1.3
 
+* Fix for #158 - Tests incorrectly excluded from mutants
 * Fix for #153 - SCM plugin broken for maven 2
+* Fix for #152 - Does not work with IDM jdk
 
 ### 1.1.2
 
